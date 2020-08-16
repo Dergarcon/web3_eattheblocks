@@ -1,0 +1,14 @@
+truffle init
+truffle create contract MyContract
+truffle create migration MyContract
+	// import and export MyContract:
+	var MyContract = artifacts.require('./MyContract.sol')
+
+	module.exports = function(deployer) {
+		  deployer.deploy(MyContract)
+	}
+
+2nd terminal:
+truffle develop
+    compile
+    migrate --reset
