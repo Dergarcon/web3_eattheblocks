@@ -25,9 +25,10 @@ const init = async() => {
         const addresses = await web3.eth.getAccounts()
          
         // Create and send out Transaction -> changing data state of smart contract to 100
-        await contract.methods.setData(100).send({
+        const receipt = await contract.methods.setData(100).send({
             from: addresses[0]                
         })
+        console.log('receipt: ', receipt)
 
         // Get state of Data - should be 100
         const data = await contract.methods.getData().call()
