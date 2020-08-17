@@ -7,8 +7,51 @@ truffle create migration MyContract
 	module.exports = function(deployer) {
 		  deployer.deploy(MyContract)
 	}
-
+write SC
 2nd terminal:
 truffle develop
     compile
     migrate --reset
+
+create index.js in /
+
+## Boilerplate for index.js ##
+const Web3 = require('web3')
+const MyContract = require('./build/contracts/MyContract.json')
+
+const URL = 'http://localhost:9545'
+
+const init = async() => {        
+
+    try{                        
+
+        // Create Web3 object with URL parameter (i.e. local Ganash Blockchain)
+        const web3 = new Web3(URL)   
+        
+        // Get ID of the network
+        id = await web3.eth.net.getId()  
+        
+        // Get Networks object of MyContract 
+        const deployedNetwork  = await MyContract.networks[id]  
+
+        // Create Contracts object with ABI of MyContract and the Networkadress of MyContract
+        const contract = new web3.eth.Contract(
+            MyContract.abi, deployedNetwork.address            
+        )        
+
+        // Get addresses to prepare transactions
+        const addresses = await web3.eth.getAccounts()
+
+	  	console.log(`NetworkId: ${id}, addresses[0]: ${addresses[0]}, addresses[9]: ${addresses[9]}`)
+
+		// START CODING HERE 
+		// & delete log above if you want and none is undefined
+		
+
+        console.log('done.\n\n')                        
+    }catch (err) {
+        console.error(err)
+    }
+}
+
+init()
